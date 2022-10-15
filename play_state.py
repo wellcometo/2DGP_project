@@ -8,14 +8,12 @@ class Background:
         self.image = load_image('background_forest.png')
 
     def draw(self):
-        self.image.clip_draw(0, 0, background_image_width, background_image_height, background_image_width*2, background_image_height*2)
+        self.image.clip_draw(0, 0, background_image_width, background_image_height, background_image_width, background_image_height, background_image_width*2, background_image_height*2)
 
 
 class Player:
     def __init__(self):
-        self.player_image = load_image('player_image.png')
-        self.attack_image = load_image('attack_image.png')
-        self.attack = None
+        self.image = load_image('player_image.png')
 
     def update(self):
         global x, y
@@ -30,27 +28,65 @@ class Player:
             y = 0
 
     def draw(self):
-        self.player_image.draw(x, y)
+        self.image.draw(x, y)
 
+
+class NoneAttack:
+    def __init__(self):
+        pass
+
+    def update(self):
+        pass
+
+    def draw(self):
+        pass
+
+class Attack:
+    def __init__(self):
+        self.image = load_image('attack_image.png')
+        self.attack_x = x
+        self.attack_y = y + 50
+
+    def update(self):
+        attack.attack_y += 2
+
+    def draw(self):
+        self.image.draw(attack.attack_x, attack.attack_y)
+
+
+class SkillAttack:
+    def __init__(self):
+        self.image = load_image('skill_attack_image.png')
+        self.attack_x = x
+        self.attack_y = y + 50
+
+    def update(self):
+        attack.attack_y += 2
+
+    def draw(self):
+        self.image.draw(attack.attack_x, attack.attack_y)
 
 def handle_events():
     global running
     global x, y
+    global attack
 
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif pico2d.SDL_MOUSEMOTION:
+        elif event.type == SDL_KEYDOWN:
+            if event.key == SDLK_ESCAPE:
+                game_framework.quit()
+
+        if event.type == pico2d.SDL_MOUSEMOTION:
             x, y = event.x, background_image_height*2 - 1 - event.y
-        elif event.type == SDL_MouseButtonEvent:
-            match event.key:
-                # case pico2d.SDLK_ESCAPE:
-                #     game_framework.change_state(title_state)
-                case pico2d.SDL_BUTTON_LEFT:
-                    player.attack = 'Attack'
-                case pico2d.SDL_BUTTON_RIGHT:
-                    player.attack = 'SkillAttack'
+
+        if event.type == SDL_MOUSEBUTTONDOWN:
+            if event.button == pico2d.SDL_BUTTON_LEFT:
+                attack = Attack()
+            elif event.button == pico2d.SDL_BUTTON_RIGHT:
+                attack = SkillAttack()
 
 
 background_image_width = 384
@@ -59,29 +95,35 @@ running = True
 player = None
 background = None
 x, y = 0, 0
+attack = None
 
 
 def enter():
-    global running, player, background
+    global running, player, background, x, y, attack
     running = True
     player = Player()
     background = Background()
+    x, y = 0, 0
+    attack = NoneAttack()
 
 
 def exit():
-    global player, background
+    global player, background, x, y, attack
     del player
     del background
+    del x, y
+    del attack
 
 
 def update():
     player.update()
+    attack.update()
 
 
 def draw_world():
-    player.draw()
     background.draw()
-
+    player.draw()
+    attack.draw()
 
 def draw():
     clear_canvas()
