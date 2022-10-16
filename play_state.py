@@ -1,5 +1,7 @@
 from pico2d import *
 import game_framework
+import enemy_dragon
+import player_attack
 
 
 class Background:
@@ -30,40 +32,40 @@ class Player:
         self.image.draw(x, y)
 
 
-class NoneAttack:
-    def __init__(self):
-        pass
-
-    def update(self):
-        pass
-
-    def draw(self):
-        pass
-
-class Attack:
-    def __init__(self):
-        self.image = load_image('attack_image.png')
-        self.attack_x = x
-        self.attack_y = y + 50
-
-    def update(self):
-        self.attack_y += 2
-
-    def draw(self):
-        self.image.draw(self.attack_x, self.attack_y)
-
-
-class SkillAttack:
-    def __init__(self):
-        self.image = load_image('skill_attack_image.png')
-        self.attack_x = x
-        self.attack_y = y + 50
-
-    def update(self):
-        self.attack_y += 2
-
-    def draw(self):
-        self.image.draw(self.attack_x, self.attack_y)
+# class NoneAttack:
+#     def __init__(self):
+#         pass
+#
+#     def update(self):
+#         pass
+#
+#     def draw(self):
+#         pass
+#
+# class Attack:
+#     def __init__(self):
+#         self.image = load_image('attack_image.png')
+#         self.attack_x = x
+#         self.attack_y = y + 50
+#
+#     def update(self):
+#         self.attack_y += 2
+#
+#     def draw(self):
+#         self.image.draw(self.attack_x, self.attack_y)
+#
+#
+# class SkillAttack:
+#     def __init__(self):
+#         self.image = load_image('skill_attack_image.png')
+#         self.attack_x = x
+#         self.attack_y = y + 50
+#
+#     def update(self):
+#         self.attack_y += 2
+#
+#     def draw(self):
+#         self.image.draw(self.attack_x, self.attack_y)
 
 def handle_events():
     global running
@@ -83,11 +85,10 @@ def handle_events():
 
         if event.type == SDL_MOUSEBUTTONDOWN:
             if event.button == pico2d.SDL_BUTTON_LEFT:
-                # attacks = Attack()
-                attacks.append(Attack())
+                attacks.append(player_attack.Attack())
             elif event.button == pico2d.SDL_BUTTON_RIGHT:
-                # attacks = SkillAttack()
-                attacks.append(SkillAttack())
+                attacks.append(player_attack.SkillAttack())
+
 
 background_image_width = 384
 background_image_height = 512
@@ -97,22 +98,28 @@ background = None
 x, y = 0, 0
 attacks = []
 
+enemies = []
+
 
 def enter():
-    global running, player, background, x, y, attacks
+    global running, player, background, x, y, attacks, enemies
     running = True
     player = Player()
     background = Background()
     x, y = 0, 0
-    attacks = [NoneAttack()]
+    attacks = [player_attack.NoneAttack()]
+
+    enemies = [enemy_dragon.Lv1Dragon()]
 
 
 def exit():
-    global player, background, x, y, attacks
+    global player, background, x, y, attacks, enemies
     del player
     del background
     del x, y
     del attacks
+
+    del enemies
 
 
 def update():
@@ -120,9 +127,16 @@ def update():
     for attack in attacks:
         attack.update()
 
+    for enemy in enemies:
+        enemy.update()
+
 
 def draw_world():
     background.draw()
+
+    for enemy in enemies:
+        enemy.draw()
+
     player.draw()
     for attack in attacks:
         attack.draw()
