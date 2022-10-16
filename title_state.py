@@ -26,8 +26,7 @@ def handle_events():
                 game_framework.quit()
             elif event.key == SDLK_SPACE:  # 스페이스바 누르면 게임 시작
                 game_framework.change_state(play_state)
-
-        if event.type == SDL_MOUSEBUTTONDOWN:  # 마우스 좌클릭 시 게임 시작
+        elif event.type == SDL_MOUSEBUTTONDOWN:  # 마우스 좌클릭 시 게임 시작
             if event.button == pico2d.SDL_BUTTON_LEFT:
                 game_framework.change_state(play_state)
 
