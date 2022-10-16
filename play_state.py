@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import enemy_dragon
 import player_attack
+import time
 
 
 class Background:
@@ -32,40 +33,17 @@ class Player:
         self.image.draw(x, y)
 
 
-# class NoneAttack:
-#     def __init__(self):
-#         pass
-#
-#     def update(self):
-#         pass
-#
-#     def draw(self):
-#         pass
-#
-# class Attack:
-#     def __init__(self):
-#         self.image = load_image('attack_image.png')
-#         self.attack_x = x
-#         self.attack_y = y + 50
-#
-#     def update(self):
-#         self.attack_y += 2
-#
-#     def draw(self):
-#         self.image.draw(self.attack_x, self.attack_y)
-#
-#
-# class SkillAttack:
-#     def __init__(self):
-#         self.image = load_image('skill_attack_image.png')
-#         self.attack_x = x
-#         self.attack_y = y + 50
-#
-#     def update(self):
-#         self.attack_y += 2
-#
-#     def draw(self):
-#         self.image.draw(self.attack_x, self.attack_y)
+class Timer:  # 적 생성 시간과 플레이어의 점수에 쓰이는 타이머
+    def __init__(self):
+        self.start_time = time.time()
+        self.now_time = None
+
+    def update(self):
+        self.now_time = time.time() - self.start_time
+
+    # def draw(self):
+    #     print(self.now_time)
+
 
 def handle_events():
     global running
@@ -80,14 +58,17 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
 
-        if event.type == pico2d.SDL_MOUSEMOTION:
+        if event.type == pico2d.SDL_MOUSEMOTION:  # 마우스 이동으로 플레이어 캐릭터 이동
             x, y = event.x, background_image_height*2 - 1 - event.y
 
-        if event.type == SDL_MOUSEBUTTONDOWN:
+        if event.type == SDL_MOUSEBUTTONDOWN:  # 마우스 좌클릭으로 공격, 우클릭으로 스킬 공격
             if event.button == pico2d.SDL_BUTTON_LEFT:
                 attacks.append(player_attack.Attack())
             elif event.button == pico2d.SDL_BUTTON_RIGHT:
                 attacks.append(player_attack.SkillAttack())
+
+        # if 0.5 < now_time.now_time < 0.502:  # 일정 시간에 적 생성
+        #     enemies.append(enemy_dragon.Lv2Dragon())
 
 
 background_image_width = 384
@@ -97,49 +78,50 @@ player = None
 background = None
 x, y = 0, 0
 attacks = []
-
 enemies = []
+now_time = None
 
 
 def enter():
-    global running, player, background, x, y, attacks, enemies
+    global running, player, background, x, y, attacks, enemies, now_time
     running = True
     player = Player()
     background = Background()
     x, y = 0, 0
     attacks = [player_attack.NoneAttack()]
-
-    enemies = [enemy_dragon.Lv1Dragon()]
+    enemies = [enemy_dragon.Lv1Dragon(), enemy_dragon.Lv2Dragon()]
+    now_time = Timer()
 
 
 def exit():
-    global player, background, x, y, attacks, enemies
+    global player, background, x, y, attacks, enemies, now_time
     del player
     del background
     del x, y
     del attacks
-
     del enemies
+    del now_time
 
 
 def update():
     player.update()
     for attack in attacks:
         attack.update()
-
     for enemy in enemies:
         enemy.update()
+    now_time.update()
 
 
 def draw_world():
     background.draw()
-
     for enemy in enemies:
         enemy.draw()
-
     player.draw()
     for attack in attacks:
         attack.draw()
+
+    # now_time.draw()
+
 
 def draw():
     clear_canvas()
@@ -153,13 +135,3 @@ def pause():
 
 def resume():
     pass
-
-
-def test_self():
-    import sys
-    pico2d.open_canvas()
-    game_framework.run(sys.modules['__main__'])
-    pico2d.close_canvas()
-
-if __name__ == '__main__':
-    test_self()

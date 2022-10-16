@@ -37,15 +37,3 @@ class SkillAttack:
 
     def draw(self):
         self.image.draw(self.attack_x, self.attack_y)
-
-
-# def handle_events():
-#     events = get_events()
-#     for event in events:
-#         if event.type == SDL_MOUSEBUTTONDOWN:
-#             if event.button == pico2d.SDL_BUTTON_LEFT:
-#                 # attacks = Attack()
-#                 play_state.attacks.append(Attack())
-#             elif event.button == pico2d.SDL_BUTTON_RIGHT:
-#                 # attacks = SkillAttack()
-#                 play_state.attacks.append(SkillAttack())
