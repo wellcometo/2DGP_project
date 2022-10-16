@@ -84,7 +84,7 @@ background = None
 x, y = 0, 0
 attacks = []
 enemies = []
-meteors = None
+meteors = []
 now_time = None
 
 
@@ -101,8 +101,7 @@ def enter():
                enemy_dragon.Lv4Dragon(),
                enemy_dragon.Lv5Dragon()]
     now_time = Timer()
-
-    meteors = meteo.Meteo()
+    meteors = [meteo.NoneMeteo()]
 
 
 def exit():
@@ -115,15 +114,17 @@ def exit():
     del now_time
     del meteors
 
+
 def update():
     player.update()
     for attack in attacks:
         attack.update()
     for enemy in enemies:
         enemy.update()
+    for meteor in meteors:
+        meteor.update()
     now_time.update()
 
-    meteors.update()
 
 def draw_world():
     background.draw()
@@ -132,9 +133,10 @@ def draw_world():
     player.draw()
     for attack in attacks:
         attack.draw()
-
+    for meteor in meteors:
+        meteor.draw()
     # now_time.draw()
-    meteors.draw()
+
 
 def draw():
     clear_canvas()

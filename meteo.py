@@ -3,6 +3,17 @@ import game_framework
 import play_state
 
 
+class NoneMeteo:
+    def __init__(self):
+        pass
+
+    def update(self):
+        pass
+
+    def draw(self):
+        pass
+
+
 class Meteo:
     def __init__(self):
         self.image = load_image('meteo01.png')
