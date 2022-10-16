@@ -46,7 +46,7 @@ class Timer:  # 적 생성 시간과 플레이어의 점수에 쓰이는 타이�
     def update(self):
         self.current_time = time.time() - self.start_time
 
-    # def draw(self):
+    # def draw(self):  # 시간 확인할 때 씀
     #     print(self.current_time)
 
 
@@ -95,13 +95,13 @@ def enter():
     background = Background()
     x, y = 0, 0
     attacks = [player_attack.NoneAttack()]
-    enemies = [enemy_dragon.Lv1Dragon(),
-               enemy_dragon.Lv2Dragon(),
+    enemies = [enemy_dragon.Lv1Dragon(),  # 시험하기 위해서 모든 용을 리스트에 넣음
+               enemy_dragon.Lv2Dragon(),  # 나중에 enemy_dragon.NoneDragon()으로 수정하기 바람
                enemy_dragon.Lv3Dragon(),
                enemy_dragon.Lv4Dragon(),
                enemy_dragon.Lv5Dragon()]
     now_time = Timer()
-    meteors = [meteo.NoneMeteo()]
+    meteors = [meteo.Meteo()]  # 시험하기 위해서 메테오 넣음, 나중에 meteo.NoneMeteo()로 수정하기 바람
 
 
 def exit():
@@ -135,7 +135,7 @@ def draw_world():
         attack.draw()
     for meteor in meteors:
         meteor.draw()
-    # now_time.draw()
+    # now_time.draw()  # 시간 확인할 때 씀
 
 
 def draw():
