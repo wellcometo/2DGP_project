@@ -72,7 +72,7 @@ def handle_events():
             elif event.button == pico2d.SDL_BUTTON_RIGHT:
                 attacks.append(player_attack.SkillAttack())
 
-        # if 0.5 < now_time.current_time < 0.502:  # 일정 시간에 적 생성
+        # if 0.5 < now_time.current_time < 0.502:  # 일정 시간에 적 생성, 정상 작동X 수정 바람
         #     enemies.append(enemy_dragon.Lv2Dragon())
 
 
