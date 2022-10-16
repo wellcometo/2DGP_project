@@ -5,7 +5,7 @@ import player_attack
 import time
 
 
-class Background:
+class Background:  # 백그라운드 이미지 클래스
     def __init__(self):
         self.image = load_image('background_forest.png')
 
@@ -14,7 +14,7 @@ class Background:
         self.image.clip_draw(0, 0, background_image_width, background_image_height, background_image_width, background_image_height, background_image_width*2, background_image_height*2)
 
 
-class Player:
+class Player:  # 플레이어 캐릭터 클래스
     def __init__(self):
         self.image = load_image('player_image.png')
 
@@ -37,13 +37,13 @@ class Player:
 class Timer:  # 적 생성 시간과 플레이어의 점수에 쓰이는 타이머
     def __init__(self):
         self.start_time = time.time()
-        self.now_time = None
+        self.current_time = None
 
     def update(self):
-        self.now_time = time.time() - self.start_time
+        self.current_time = time.time() - self.start_time
 
     # def draw(self):
-    #     print(self.now_time)
+    #     print(self.current_time)
 
 
 def handle_events():
@@ -68,7 +68,7 @@ def handle_events():
             elif event.button == pico2d.SDL_BUTTON_RIGHT:
                 attacks.append(player_attack.SkillAttack())
 
-        # if 0.5 < now_time.now_time < 0.502:  # 일정 시간에 적 생성
+        # if 0.5 < now_time.current_time < 0.502:  # 일정 시간에 적 생성
         #     enemies.append(enemy_dragon.Lv2Dragon())
 
 
