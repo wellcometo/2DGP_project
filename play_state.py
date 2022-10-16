@@ -11,7 +11,10 @@ class Background:  # 백그라운드 이미지 클래스
 
     def draw(self):
         # 캔버스에 백그라운드 이미지 가로 세로 2배씩 늘려서 그리기
-        self.image.clip_draw(0, 0, background_image_width, background_image_height, background_image_width, background_image_height, background_image_width*2, background_image_height*2)
+        self.image.clip_draw(0, 0,
+                             background_image_width, background_image_height,
+                             background_image_width, background_image_height,
+                             background_image_width*2, background_image_height*2)
 
 
 class Player:  # 플레이어 캐릭터 클래스
@@ -90,7 +93,11 @@ def enter():
     background = Background()
     x, y = 0, 0
     attacks = [player_attack.NoneAttack()]
-    enemies = [enemy_dragon.Lv1Dragon(), enemy_dragon.Lv2Dragon(), enemy_dragon.Lv3Dragon(), enemy_dragon.Lv4Dragon(), enemy_dragon.Lv5Dragon()]
+    enemies = [enemy_dragon.Lv1Dragon(),
+               enemy_dragon.Lv2Dragon(),
+               enemy_dragon.Lv3Dragon(),
+               enemy_dragon.Lv4Dragon(),
+               enemy_dragon.Lv5Dragon()]
     now_time = Timer()
 
 
