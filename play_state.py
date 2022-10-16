@@ -48,10 +48,10 @@ class Attack:
         self.attack_y = y + 50
 
     def update(self):
-        attack.attack_y += 2
+        self.attack_y += 2
 
     def draw(self):
-        self.image.draw(attack.attack_x, attack.attack_y)
+        self.image.draw(self.attack_x, self.attack_y)
 
 
 class SkillAttack:
@@ -61,15 +61,15 @@ class SkillAttack:
         self.attack_y = y + 50
 
     def update(self):
-        attack.attack_y += 2
+        self.attack_y += 2
 
     def draw(self):
-        self.image.draw(attack.attack_x, attack.attack_y)
+        self.image.draw(self.attack_x, self.attack_y)
 
 def handle_events():
     global running
     global x, y
-    global attack
+    global attacks
 
     events = get_events()
     for event in events:
@@ -84,10 +84,11 @@ def handle_events():
 
         if event.type == SDL_MOUSEBUTTONDOWN:
             if event.button == pico2d.SDL_BUTTON_LEFT:
-                attack = Attack()
+                # attacks = Attack()
+                attacks.append(Attack())
             elif event.button == pico2d.SDL_BUTTON_RIGHT:
-                attack = SkillAttack()
-
+                # attacks = SkillAttack()
+                attacks.append(SkillAttack())
 
 background_image_width = 384
 background_image_height = 512
@@ -95,35 +96,37 @@ running = True
 player = None
 background = None
 x, y = 0, 0
-attack = None
+attacks = []
 
 
 def enter():
-    global running, player, background, x, y, attack
+    global running, player, background, x, y, attacks
     running = True
     player = Player()
     background = Background()
     x, y = 0, 0
-    attack = NoneAttack()
+    attacks = [NoneAttack()]
 
 
 def exit():
-    global player, background, x, y, attack
+    global player, background, x, y, attacks
     del player
     del background
     del x, y
-    del attack
+    del attacks
 
 
 def update():
     player.update()
-    attack.update()
+    for attack in attacks:
+        attack.update()
 
 
 def draw_world():
     background.draw()
     player.draw()
-    attack.draw()
+    for attack in attacks:
+        attack.draw()
 
 def draw():
     clear_canvas()
