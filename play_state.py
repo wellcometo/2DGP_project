@@ -4,6 +4,7 @@ import enemy_dragon
 import meteo
 import player_attack
 import time
+import title_state
 
 
 class Background:  # 백그라운드 이미지 클래스
@@ -61,7 +62,7 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
-                game_framework.quit()
+                game_framework.change_state(title_state)
 
         if event.type == pico2d.SDL_MOUSEMOTION:  # 마우스 이동으로 플레이어 캐릭터 이동
             x, y = event.x, background_image_height*2 - 1 - event.y
