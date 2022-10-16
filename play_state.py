@@ -1,4 +1,3 @@
-import pico2d
 from pico2d import *
 import game_framework
 
