@@ -10,6 +10,7 @@ class Background:
         self.image = load_image('background_forest.png')
 
     def draw(self):
+        # 캔버스에 백그라운드 이미지 가로 세로 2배씩 늘려서 그리기
         self.image.clip_draw(0, 0, background_image_width, background_image_height, background_image_width, background_image_height, background_image_width*2, background_image_height*2)
 
 
@@ -71,8 +72,8 @@ def handle_events():
         #     enemies.append(enemy_dragon.Lv2Dragon())
 
 
-background_image_width = 384
-background_image_height = 512
+background_image_width = 384  # 캔버스 가로 크기는 이것의 2배
+background_image_height = 512  # 캔버스 세로 크기는 이것의 2배
 running = True
 player = None
 background = None
@@ -89,7 +90,7 @@ def enter():
     background = Background()
     x, y = 0, 0
     attacks = [player_attack.NoneAttack()]
-    enemies = [enemy_dragon.Lv1Dragon(), enemy_dragon.Lv2Dragon()]
+    enemies = [enemy_dragon.Lv1Dragon(), enemy_dragon.Lv2Dragon(), enemy_dragon.Lv3Dragon(), enemy_dragon.Lv4Dragon(), enemy_dragon.Lv5Dragon()]
     now_time = Timer()
 
 
