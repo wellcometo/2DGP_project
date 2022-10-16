@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import enemy_dragon
+import meteo
 import player_attack
 import time
 
@@ -83,11 +84,12 @@ background = None
 x, y = 0, 0
 attacks = []
 enemies = []
+meteors = None
 now_time = None
 
 
 def enter():
-    global running, player, background, x, y, attacks, enemies, now_time
+    global running, player, background, x, y, attacks, enemies, now_time, meteors
     running = True
     player = Player()
     background = Background()
@@ -100,16 +102,18 @@ def enter():
                enemy_dragon.Lv5Dragon()]
     now_time = Timer()
 
+    meteors = meteo.Meteo()
+
 
 def exit():
-    global player, background, x, y, attacks, enemies, now_time
+    global player, background, x, y, attacks, enemies, now_time, meteors
     del player
     del background
     del x, y
     del attacks
     del enemies
     del now_time
-
+    del meteors
 
 def update():
     player.update()
@@ -119,6 +123,7 @@ def update():
         enemy.update()
     now_time.update()
 
+    meteors.update()
 
 def draw_world():
     background.draw()
@@ -129,7 +134,7 @@ def draw_world():
         attack.draw()
 
     # now_time.draw()
-
+    meteors.draw()
 
 def draw():
     clear_canvas()
