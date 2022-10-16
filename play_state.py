@@ -94,7 +94,7 @@ def enter():
     running = True
     player = Player()
     background = Background()
-    x, y = 0, 0
+    x, y = background_image_width, 100
     attacks = [player_attack.NoneAttack()]
     enemies = [enemy_dragon.Lv1Dragon(),  # 시험하기 위해서 모든 용을 리스트에 넣음
                enemy_dragon.Lv2Dragon(),  # 나중에 enemy_dragon.NoneDragon()으로 수정하기 바람
