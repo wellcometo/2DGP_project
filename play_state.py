@@ -1,11 +1,13 @@
 from pico2d import *
 import game_framework
 import game_world
+import player_attack
 
 from player import Player
 import enemy_dragon
 import meteo
 from background import ForestBackground
+# import stage1_forest
 
 player = None
 attacks = []
@@ -42,13 +44,14 @@ def enter():
     game_world.add_objects(attacks, 1)
 
     global enemies
-    enemies = []
+    enemies = [enemy_dragon.NoneDragon()]
     game_world.add_objects(enemies, 1)
 
     # 충돌 대상 정보를 등록
     game_world.add_collision_pairs(player, enemies, 'player:enemies')
     game_world.add_collision_pairs(attacks, enemies, 'attacks:enemies')
 
+    # stage1_forest
 
 # 종료
 def exit():

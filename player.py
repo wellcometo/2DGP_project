@@ -6,7 +6,7 @@ from pico2d import *
 import game_world
 import play_state
 
-import player_attack
+from player_attack import Attack
 
 #
 # # 이벤트 정의
@@ -93,8 +93,8 @@ class Player:
         self.image.draw(self.x, self.y)
         draw_rectangle(*self.get_bb())
 
-    def add_event(self, event):
-        self.event_que.insert(0, event)
+    # def add_event(self, event):
+    #     self.event_que.insert(0, event)
 
     def handle_event(self, event):
         # 마우스 좌클릭 시 공격
@@ -107,10 +107,11 @@ class Player:
 
     def attack(self):
         print('Attack')
-        game_world.add_object(player_attack.Attack(self.x, self.y), 1)
+        game_world.add_object(Attack(self.x, self.y), 1)
 
     def get_bb(self):  # bb = Bounding Box(충돌 범위)
         return self.x-50, self.y-50, self.x+50, self.y+50
 
     def handle_collision(self, other, group):
+        print('Player')
         pass
