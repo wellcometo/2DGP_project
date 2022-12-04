@@ -7,6 +7,9 @@ class ForestBackground:  # 백그라운드 이미지 클래스
     def __init__(self):
         self.image = load_image('background_forest.png')
 
+    def update(self):
+        pass
+
     def draw(self):
         # 캔버스에 백그라운드 이미지 가로 세로 2배씩 늘려서 그리기
         self.image.clip_draw(0, 0,

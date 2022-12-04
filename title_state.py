@@ -33,7 +33,7 @@ def handle_events():
 
 def draw():
     clear_canvas()
-    image.draw(384, 512)  # 캔버스 중앙에 그리기
+    image.draw(play_state.background_image_width, play_state.background_image_height)  # 캔버스 중앙에 그리기
     update_canvas()
 
 
