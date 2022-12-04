@@ -2,7 +2,7 @@ from pico2d import *
 import game_framework
 import game_world
 
-from player import Player, IDLE
+from player import Player
 import enemy_dragon
 import meteo
 from background import ForestBackground
