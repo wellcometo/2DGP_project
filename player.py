@@ -1,6 +1,10 @@
+import time
+
 from pico2d import *
 import game_world
 import play_state
+
+import player_attack
 
 
 # 이벤트 정의
@@ -18,6 +22,7 @@ class IDLE:
     @staticmethod
     def enter(self):
         print('ENTER IDLE')
+        pass
 
     @staticmethod
     def exit(self):
@@ -36,11 +41,14 @@ class IDLE:
 class ATTACK:
     def enter(self):
         print('ENTER ATTACK')
+        pass
 
     def exit(self):
         print('EXIT ATTACK')
+        pass
 
     def do(self):
+        game_world.add_object(player_attack.Attack(self.x, self.y), 1)
         pass
 
     def draw(self):
@@ -58,7 +66,7 @@ class Player:
 
     def __init__(self):
         self.x, self.y = 0, 0
-        self.image = load_image('player_image.png')
+        self.image = load_image('images/player_image.png')
 
         self.event_que = []
         self.cur_state = IDLE

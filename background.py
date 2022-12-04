@@ -5,7 +5,7 @@ import play_state
 
 class ForestBackground:  # 백그라운드 이미지 클래스
     def __init__(self):
-        self.image = load_image('background_forest.png')
+        self.image = load_image('images/background_forest.png')
 
     def update(self):
         pass

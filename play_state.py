@@ -29,17 +29,21 @@ def handle_events():
 
 # 초기화
 def enter():
-    global player
-    player = Player()
-    game_world.add_object(player, 1)
-
     global background
     background = ForestBackground()
     game_world.add_object(background, 0)
 
-    # global balls
-    # balls = [Ball() for i in range(10)] + [BigBall() for i in range(10)]
-    # game_world.add_objects(balls, 1)
+    global player
+    player = Player()
+    game_world.add_object(player, 1)
+
+    global attacks
+    attacks = []
+    game_world.add_objects(attacks, 1)
+
+    global enemies
+    enemies = []
+    game_world.add_objects(enemies, 1)
 
     # 충돌 대상 정보를 등록
     game_world.add_collision_pairs(player, enemies, 'player:enemies')
@@ -49,6 +53,7 @@ def enter():
 # 종료
 def exit():
     game_world.clear()
+
 
 def update():
     for game_object in game_world.all_objects():
@@ -68,17 +73,21 @@ def update():
     #         game_world.remove_object(ball)  # object 에서는 삭제했지만 balls 에 남아있음
     #         balls.remove(ball)  # balls 리스트에서 ball 삭제
 
+
 def draw_world():
     for game_object in game_world.all_objects():
         game_object.draw()
+
 
 def draw():
     clear_canvas()
     draw_world()
     update_canvas()
 
+
 def pause():
     pass
+
 
 def resume():
     pass

@@ -1,12 +1,12 @@
-
-# layer 0: Background Objects
-# layer 1: Foreground Objects
+# layer 0: Background Objects(뒤)
+# layer 1: Foreground Objects(앞)
 objects = [[], []]
 
-# collision information
-# key = 'boy:balls', string
-# Value [ [boy], [ball1, ball2, ball3] ]
+# collision information(충돌 정보)
+# key = 'player:enemies', string
+# Value [ [player], [enemies1, enemies2, enemies3] ]
 collision_group = dict()
+
 
 def add_object(o, depth):
     objects[depth].append(o)
@@ -59,13 +59,13 @@ def add_collision_pairs(a, b, group):
 
 
 def all_collision_pairs():
-    for group, pairs in collision_group.items():  # key, value 를 다 가져옴
+    for group, pairs in collision_group.items():  # key, value 다 가져옴
         for a in pairs[0]:
             for b in pairs[1]:
                 yield a, b, group
 
 
 def remove_collision_object(o):
-    for pairs in collision_group.values():  # key 는 가져오지 않고, value 만 가져옴
+    for pairs in collision_group.values():  # key는 가져 오지 않고, value만 가져옴
         if o in pairs[0]: pairs[0].remove(o)
         elif o in pairs[1]: pairs[1].remove(o)
